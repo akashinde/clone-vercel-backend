@@ -17,3 +17,15 @@ export async function uploadFile (fileName: string, localFilePath: string) {
     }).promise()
     console.log(response);
 }
+
+export async function fetchObject (id: string, filePath: string) {
+    try {
+        const content = await s3.getObject({
+            Bucket: 'clone-vercel',
+            Key: `build/${id}${filePath}`
+        }).promise();
+        return content;
+    } catch (error) {
+        return { Body: 'File not found' };
+    }
+}
